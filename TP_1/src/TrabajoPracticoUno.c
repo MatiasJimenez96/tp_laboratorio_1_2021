@@ -52,6 +52,7 @@ int main(void) {
 
 	int banderaCaseUno = 0;
 	int banderaCaseDos = 0;
+	int banderaCaseTres = 0;
 
 	do {
 
@@ -71,30 +72,44 @@ int main(void) {
 			if (banderaCaseUno == 1 && banderaCaseDos == 1) {
 				suma = CalcularSuma(x, y); //Suma.
 				resta = CalcularResta(x, y); //Resta.
-				if(y==0){ //division
-					strcpy(resultadoDivision, "No se puede dividir por 0 (Cero).");
-				}else{
+				if (y == 0) { //division
+					strcpy(resultadoDivision,
+							"No se puede dividir por 0 (Cero).");
+				} else {
 					division = CalcularDivision(x, y);
 					sprintf(resultadoDivision, "%.2f", division); // Lo mismo que itoa pero para float.
 				}
 				multiplicacion = CalcularMultiplicacion(x, y); //Multiplicacion.
 
-				if (ValidarEnteroODecimal(x) && x < 11) {  //Factorial.
+				if (ValidarEnteroODecimal(x) && x < 11 && x >= 0) { //Factorial.
+					if (x == 0) {
+						strcpy(strFactorialX, "1");
+					} else {
+						factorialX = CalcularFactorial(x);
+						itoa(factorialX, strFactorialX, 10); // convierte un valor numerico en una cadena de texto de base 10.
+					}
 					factorialX = CalcularFactorial(x);
 					itoa(factorialX, strFactorialX, 10); // convierte un valor numerico en una cadena de texto de base 10.
 				} else {
 					strcpy(strFactorialX,
-							"No se pudo calcular el factorial A, el numero debe ser menor a 10 y sin decimales.");
+							"No se pudo calcular el factorial A, el numero debe ser mayor a 0, menor a 10 y sin decimales.");
 				}
 
-				if (ValidarEnteroODecimal(y) && y < 11) {
+				if (ValidarEnteroODecimal(y) && y < 11 && y >= 0) {
+					if (y == 0) {
+						strcpy(strFactorialY, "1");
+					} else {
+						factorialY = CalcularFactorial(y);
+						itoa(factorialY, strFactorialY, 10); // convierte un valor numerico en una cadena de texto de base 10.
+					}
 					factorialY = CalcularFactorial(y);
 					itoa(factorialY, strFactorialY, 10); // convierte un valor numerico en una cadena de texto de base 10.
 
 				} else {
 					strcpy(strFactorialY,
-							"No se pudo calcular el factorial B, el numero debe ser menor a 10 y sin decimales.");
+							"No se pudo calcular el factorial B, el numero debe ser mayor a 0, menor a 10 y sin decimales.");
 				}
+				banderaCaseTres = 1;
 				printf("\n--------------------------------------------------\n"
 						"-------Se calcularon todas las operaciones.-------\n"
 						"--------------------------------------------------\n");
@@ -107,7 +122,7 @@ int main(void) {
 			break;
 
 		case 4:
-			if (banderaCaseUno == 1 && banderaCaseDos == 1) {
+			if (banderaCaseTres == 1) {
 				printf("--------------------------------------------------\n"
 						"--------------------RESULTADOS--------------------\n"
 						"--------------------------------------------------\n"
@@ -116,19 +131,24 @@ int main(void) {
 						"El resultado de la division es: %s\n"
 						"El resultado de la multiplicacion es: %.2f\n"
 						"El factorial A es: %s\n"
-						"El factorial B es: %s\n\n", suma, resta, resultadoDivision,
-						multiplicacion, strFactorialX, strFactorialY);
+						"El factorial B es: %s\n\n", suma, resta,
+						resultadoDivision, multiplicacion, strFactorialX,
+						strFactorialY);
+
 				printf("Desea continuar?: "
 						"Presionar 1 para continuar o 2 para salir. ");
 				scanf("%d", &continuar);
-				if(continuar == 2){
+				while (continuar > 2) {
+					printf("\nError, ingresar 1 o 2: ");
+					scanf("%d", &continuar);
+				}
+				if (continuar == 2) {
 					printf("\nGracias por usar la calculadora del Cracken");
 				}
 
-
 			} else {
 				printf("\n--------------------------------------------------\n"
-						"------- Falta ingresar un valor o varios. --------\n"
+						"------ Aun no se calcularon los resultados. ------\n"
 						"--------------------------------------------------\n");
 			}
 
